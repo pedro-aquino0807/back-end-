@@ -1,0 +1,1 @@
+module.exports = (sequelize) => sequelize.define('ProductCategory', { product_id: { type: sequelize.Sequelize.INTEGER, primaryKey: true }, category_id: { type: sequelize.Sequelize.INTEGER, primaryKey: true } }, { tableName: 'product_categories', underscored: true, timestamps: false });

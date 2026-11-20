@@ -1,0 +1,14 @@
+const sequelize = require('../config/connection');
+const User = require('./user')(sequelize);
+const Category = require('./category')(sequelize);
+const Product = require('./product')(sequelize);
+const ProductImage = require('./productImage')(sequelize);
+const ProductOption = require('./productOption')(sequelize);
+const ProductCategory = require('./productCategory')(sequelize);
+Product.hasMany(ProductImage, { as: 'images', foreignKey: 'product_id', onDelete: 'CASCADE' });
+ProductImage.belongsTo(Product, { foreignKey: 'product_id' });
+Product.hasMany(ProductOption, { as: 'options', foreignKey: 'product_id', onDelete: 'CASCADE' });
+ProductOption.belongsTo(Product, { foreignKey: 'product_id' });
+Product.belongsToMany(Category, { through: ProductCategory, as: 'categories', foreignKey: 'product_id', otherKey: 'category_id' });
+Category.belongsToMany(Product, { through: ProductCategory, as: 'products', foreignKey: 'category_id', otherKey: 'product_id' });
+module.exports = { sequelize, User, Category, Product, ProductImage, ProductOption, ProductCategory };
